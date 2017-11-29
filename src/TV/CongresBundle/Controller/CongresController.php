@@ -249,7 +249,7 @@ class CongresController extends Controller
                 default:
                     $totalAmount = $congres->getPriceBoth();
             }
-            if($event == true){
+            if($event === true){
                 $totalAmount = $totalAmount + $congres->getEventPrice();
             }
             $congressRegistration->setTotalAmount($totalAmount);

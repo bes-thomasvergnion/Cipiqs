@@ -51,9 +51,6 @@ class PageController extends Controller
                 if($this->sendEmail($form->getData())){
                     return $this->redirectToRoute('tv_cipiqs_homepage');
                 }
-                else{
-                    var_dump("Errooooor :(");
-                }
             }
         }
 
