@@ -1,0 +1,65 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Congrès
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="admin-container">
+            <h2>Brouillons</h2>
+            <a class="btn add" href="{{ path('tv_user_admin_congres') }}"><i class="fa fa-plus" aria-hidden="true"></i> Retour</a>
+            <table>
+                <tr class="table-head">
+                    <th>N°</th>
+                    <th>Image</th>
+                    <th class="table-title">Titre</th>
+                    <th>Etat</th>
+                    <th>Date(s) du congrès</th>
+                    <th>Lieu</th>
+                    <th>Date de création</th>
+                    <th>Actions</th>
+                </tr>
+                {% for congres in listCongres %}
+                    {% set count = count + 1 %}
+                    <tr class="{% if loop.index is odd %}grey{% endif %}">
+                        <td>{{ count }}</td>
+                        <td>
+                            {% if congres.image is not null %}
+                                <img class="picture" src="{{ asset(vich_uploader_asset(congres.image, 'file')) }}" alt="{{ congres.image.alt }}">
+                            {% else %}
+                                <img class="picture img-congres-single" src="{{ asset('cipiqs/images/congres-default.jpg') }}" alt="Congrès défaut">
+                            {% endif %}
+                        </td>
+                        <td class="table-title">{{ congres.title }}</td>
+                        <td>{{ congres.state.name }}</td>
+                        <td>
+                            {% for date in congres.dates %}
+                                {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ congres.localisation }}</td>
+                        <td>{{ congres.publicationDate|date('d/m/Y') }}</td>
+                        <td>
+                            <a class="btn edit" href="{{ path('tv_congres_edit', {'id':congres.id}) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> 
+                            <a class="btn delete" href="{{ path('tv_congres_delete', {'id':congres.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="paginaPagintion-container">
+                <ul class="pagination">
+                    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                    {% for p in range(1, nbPages) %}
+                      <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('tv_user_admin_congres_brouillons', {'page': p}) }}">{{ p }}</a>
+                      </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+{% endblock %}
+
+

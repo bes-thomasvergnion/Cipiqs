@@ -1,0 +1,30 @@
+{# src/TV/CongresBundle/Resources/views/Congres/register.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - {{ congres.title }}
+{% endblock %}
+
+{% block cipiqs_body %}
+    <section class="border-top">
+        <div class="container">
+            <h2>Inscription pour le congrès: {{ congres.title }}</h2>
+            <p>
+            {% if registration.chosenDay == 'Inscription au jour 1' %}
+                Vous êtes déjà inscrit pour le premier jour de la formation ({{ congres.dates[0].date|date('d/m/Y') }})
+            {% elseif registration.chosenDay == 'Inscription au jour 2'%}
+                Vous êtes déjà inscrit pour le deuxième jour de la formation ({{ congres.dates[1].date|date('d/m/Y') }})
+            {% elseif registration.chosenDay == 'Inscription au deux jours'%}
+                Vous êtes déjà inscrit pour les deux jour de la formation ({{ congres.dates[0].date|date('d/m/Y') }} & {{ congres.dates[1].date|date('d/m/Y') }})
+            {% elseif registration.chosenDay == 'Inscription au deux jours en groupe'%}
+                Vous êtes déjà inscrit pour les deux jour de la formation en groupe ({{ congres.dates[0].date|date('d/m/Y') }} & {{ congres.dates[1].date|date('d/m/Y') }})
+            {% endif %}
+            {% if registration.event == true %} et à la soirée festive{% endif %}.
+            </p>
+                <p>Montant à payer: {{ registration.totalAmount }} €</p>
+                <p>Les frais d'inscription et l'éventuelle inscription à la soirée festive sont à virer sur le compte IBAN LU25 1111 2579 9673 0000 des P & T Luxembourg. Le Code BIC des P&T est : CCPLLULL</p>
+            
+        </div>
+    </section>
+{% endblock %}

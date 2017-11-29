@@ -1,0 +1,55 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Congrès
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="admin-container">
+            <h2>Membres inscrits au congrès: {{ congres.title }}</h2>
+            {% if registrations is not empty %}
+                <table class="registered-members">
+                <tr>
+                    <th>N°</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Profession</th>
+                    <th>Institution</th>
+                    <th>Type d'inscription</th>
+                    {% if congres.event is not null %}<th>Participation à l'événement</th>{% endif %}
+                    <th>Montant à payer</th>
+                </tr>
+
+                {% for registration in registrations %}
+                    {% set count = count + 1 %}
+                    <tr>
+                        <td class="number">{{ count }}</td>
+                        <td class="name">{{ registration.user.lastName }}</td>
+                        <td class="name">{{ registration.user.firstName }}</td>
+                        <td>{{ registration.user.profession }}</td>
+                        <td>{{ registration.user.institution }}</td>
+                        <td>
+                            {% if registration.chosenDay == "Inscription au jour 1" %}
+                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }}
+                            {% elseif registration.chosenDay == "Inscription au jour 2" %}
+                                Inscription pour le {{ congres.dates[1].date|date('d/m/Y') }}
+                            {% elseif registration.chosenDay == "Inscription au deux jours" %}
+                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }} et le {{ congres.dates[1].date|date('d/m/Y') }}
+                            {% elseif registration.chosenDay == "Inscription au deux jours en groupe" %}
+                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }} et le {{ congres.dates[1].date|date('d/m/Y') }} en groupe
+                            {% endif %}
+                        </td>
+                        {% if congres.event is not null %}<td>{% if registration.event == true %}Oui{% else %}Non{% endif %}</td>{% endif %}
+                        <td>{{ registration.totalAmount }} €</td>
+                    </tr>
+                {% endfor %}
+                </table>
+                <a href="{{ path('tv_user_export_csv', {'id':congres.id}) }}" class="btn">Exporter</a>
+            {% else %}
+                <p>Aucun utilisateurs inscrits à ce congrès pour le moment</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
+

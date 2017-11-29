@@ -1,0 +1,47 @@
+tv_congres_index:
+    path:     /{page}
+    defaults: 
+        _controller: TVCongresBundle:Congres:index
+        page: 1
+    requirements:
+        page: \d*
+        
+tv_congres_view:
+    path:     /view/{id}
+    defaults: 
+        _controller: TVCongresBundle:Congres:view
+    requirements:
+        id: \d+
+
+tv_congres_add:
+    path:     /add
+    defaults: 
+        _controller: TVCongresBundle:Congres:add
+        
+tv_congres_edit:
+    path:     /edit/{id}
+    defaults: 
+        _controller: TVCongresBundle:Congres:edit
+    requirements:
+        id: \d+
+
+tv_congres_delete:
+    path:     /delete/{id}
+    defaults: 
+        _controller: TVCongresBundle:Congres:delete
+    requirements:
+        id: \d+
+        
+tv_congres_register:
+    path:     /register/{id}
+    defaults: 
+        _controller: TVCongresBundle:Congres:register
+    requirements:
+        id: \d+
+        
+tv_congres_registered:
+    path:     /registered/{id}
+    defaults: 
+        _controller: TVCongresBundle:Congres:alreadyRegistered
+    requirements:
+        id: \d+

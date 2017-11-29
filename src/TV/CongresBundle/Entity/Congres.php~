@@ -1,0 +1,363 @@
+<?php
+
+namespace TV\CongresBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Congres
+ *
+ * @ORM\Table(name="congres")
+ * @ORM\Entity(repositoryClass="TV\CongresBundle\Repository\CongresRepository")
+ */
+class Congres
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publication_date", type="datetime")
+     */
+    private $publicationDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="localisation", type="string", length=255)
+     */
+    private $localisation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TV\CongresBundle\Entity\Pdf", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $preProgram;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="TV\CongresBundle\Entity\Pdf", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $summary;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TV\CongresBundle\Entity\State")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $state;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="TV\CongresBundle\Entity\Date", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $dates;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TV\CongresBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="TV\CongresBundle\Entity\RegistrationForm", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $registrationForm;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="TV\CongresBundle\Entity\CongressRegistration", mappedBy="congres")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $congressRegistrations;
+
+
+
+    public function __construct() 
+    {
+        $this->publicationDate = new \Datetime();
+        $this->dates = new ArrayCollection();
+    }
+    
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set publicationDate
+     *
+     * @param \DateTime $publicationDate
+     *
+     * @return Congres
+     */
+    public function setPublicationDate($publicationDate)
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get publicationDate
+     *
+     * @return \DateTime
+     */
+    public function getPublicationDate()
+    {
+        return $this->publicationDate;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Congres
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set localisation
+     *
+     * @param string $localisation
+     *
+     * @return Congres
+     */
+    public function setLocalisation($localisation)
+    {
+        $this->localisation = $localisation;
+
+        return $this;
+    }
+
+    /**
+     * Get localisation
+     *
+     * @return string
+     */
+    public function getLocalisation()
+    {
+        return $this->localisation;
+    }
+
+    /**
+     * Set preProgram
+     *
+     * @param \TV\CongresBundle\Entity\Pdf $preProgram
+     *
+     * @return Congres
+     */
+    public function setPreProgram(\TV\CongresBundle\Entity\Pdf $preProgram)
+    {
+        $this->preProgram = $preProgram;
+
+        return $this;
+    }
+
+    /**
+     * Get preProgram
+     *
+     * @return \TV\CongresBundle\Entity\Pdf
+     */
+    public function getPreProgram()
+    {
+        return $this->preProgram;
+    }
+
+    /**
+     * Set summary
+     *
+     * @param \TV\CongresBundle\Entity\Pdf $summary
+     *
+     * @return Congres
+     */
+    public function setSummary(\TV\CongresBundle\Entity\Pdf $summary)
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    /**
+     * Get summary
+     *
+     * @return \TV\CongresBundle\Entity\Pdf
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Congres
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set state
+     *
+     * @param \TV\CongresBundle\Entity\State $state
+     *
+     * @return Congres
+     */
+    public function setState(\TV\CongresBundle\Entity\State $state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return \TV\CongresBundle\Entity\State
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Add date
+     *
+     * @param \TV\CongresBundle\Entity\Date $date
+     *
+     * @return Congres
+     */
+    public function addDate(\TV\CongresBundle\Entity\Date $date)
+    {
+        $this->dates[] = $date;
+
+        return $this;
+    }
+
+    /**
+     * Remove date
+     *
+     * @param \TV\CongresBundle\Entity\Date $date
+     */
+    public function removeDate(\TV\CongresBundle\Entity\Date $date)
+    {
+        $this->dates->removeElement($date);
+    }
+
+    /**
+     * Get dates
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDates()
+    {
+        return $this->dates;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \TV\CongresBundle\Entity\Image $image
+     *
+     * @return Congres
+     */
+    public function setImage(\TV\CongresBundle\Entity\Image $image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \TV\CongresBundle\Entity\Image
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+    
+    /**
+     * Set registrationForm
+     *
+     * @param \TV\CongresBundle\Entity\RegistrationForm $registrationForm
+     *
+     * @return Congres
+     */
+    public function setRegistrationForm(\TV\CongresBundle\Entity\RegistrationForm $registrationForm)
+    {
+        $this->registrationForm = $registrationForm;
+
+        return $this;
+    }
+
+    /**
+     * Get registrationForm
+     *
+     * @return \TV\CongresBundle\Entity\RegistrationForm
+     */
+    public function getRegistrationForm()
+    {
+        return $this->registrationForm;
+    }
+}

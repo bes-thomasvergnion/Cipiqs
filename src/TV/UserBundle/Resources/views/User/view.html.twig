@@ -1,0 +1,35 @@
+{# src/TV/CongresBundle/Resources/views/Congres/view.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Profil
+{% endblock %}
+
+{% block cipiqs_body %}
+    <section class="border-top">
+        <div class="container profil">
+            <h2>Mon profil:</h2>
+            <img class="user-img" src="{{asset('cipiqs/images/user.jpg') }}" alt="Utilisateur">
+            <ul class="logos">
+                <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                <li><i class="fa fa-id-card-o" aria-hidden="true"></i></li>
+                <li><i class="fa fa-id-card-o" aria-hidden="true"></i></li>
+                <li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+                <li><i class="fa fa-user-md" aria-hidden="true"></i></li>
+                <li><i class="fa fa-hospital-o" aria-hidden="true"></i></li>
+            </ul>
+            <ul>
+                <li>{{ user.username }}</li>
+                <li>{{ user.lastName }}</li>
+                <li>{{ user.firstName }}</li>
+                <li>{{ user.email }}</li>
+                <li>{{ user.profession }}</li>
+                <li>{{ user.institution }}</li>
+            </ul>
+            <div class="btns">
+                <a href="{{ path('tv_user_edit', {'id':app.user.id}) }}" class="btn">Modifier profil</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

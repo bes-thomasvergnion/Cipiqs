@@ -1,0 +1,51 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Congrès
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="admin-container">
+            <h2>Utilisateurs</h2>
+            <table>
+                <tr class="table-head">
+                    <th>N°</th>
+                    <th>Pseudo</th>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>E-mail</th>
+                    <th>Profession</th>
+                    <th>Institution</th>
+                    <th>Date d'inscription</th>
+                    <th>Actions</th>
+                </tr>
+                {% for user in listUsers %}
+                    {% set count = count + 1 %}
+                    <tr class="{% if loop.index is odd %}grey{% endif %}">
+                        <td>{{ count }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.profession }}</td>
+                        <td>{{ user.institution }}</td>
+                        <td>{{ user.registrationDate|date('d/m/Y') }}</td>
+                        <td><a class="btn delete" href="{{ path('tv_user_bannish', {'id':user.id}) }}"><i class="fa fa-user-times" aria-hidden="true"></i> Bannir</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="paginaPagintion-container">
+                <ul class="pagination">
+                    {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+                    {% for p in range(1, nbPages) %}
+                      <li{% if p == page %} class="active"{% endif %}>
+                        <a href="{{ path('tv_user_index', {'page': p}) }}">{{ p }}</a>
+                      </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+{% endblock %}

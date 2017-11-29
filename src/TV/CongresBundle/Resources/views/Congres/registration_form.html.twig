@@ -1,0 +1,49 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Ajouter Formulaire d'inscription
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="admin-container">
+            <h2>Formulaire d'inscription pour le congrès: "{{ congres.title }}"</h2>
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                <p> 
+                    <label for="priceDay1">Prix pour le premier jour: </label>
+                    {{ form_widget(form.priceDay1, {'attr': {'class': 'localisation-input'}}) }}
+                    €
+                </p>
+                <p>
+                    <label for="priceDay2">Prix pour le deuxième jour: </label>
+                    {{ form_widget(form.priceDay2, {'attr': {'class': 'localisation-input'}}) }}
+                    €
+                </p>
+                <p>
+                    <label for="priceBoth">Prix pour les 2 jours: </label>
+                    {{ form_widget(form.priceBoth, {'attr': {'class': 'localisation-input'}}) }}
+                    €
+                </p>
+                <p>
+                    <label for="groupPrice">Prix de groupe: </label>
+                    {{ form_widget(form.groupPrice, {'attr': {'class': 'localisation-input'}}) }}
+                    €
+                </p>
+                <p>
+                    <label for="event">Evénement: </label>
+                    {{ form_widget(form.event, {'attr': {'class': 'localisation-input'}}) }}
+                </p>
+                <p>
+                    <label for="eventPrice">Prix de l'événement: </label>
+                    {{ form_widget(form.eventPrice, {'attr': {'class': 'localisation-input'}}) }}
+                    €
+                </p>
+                
+                <button type="submit" class="btn publish">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> Publier
+                </button>
+            {{ form_end(form) }}
+            <div class="clearfix"></div>
+        </div>
+    </section>
+{% endblock %}

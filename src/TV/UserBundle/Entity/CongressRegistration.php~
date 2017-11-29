@@ -1,0 +1,57 @@
+<?php
+
+namespace TV\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CongressRegistration
+ *
+ * @ORM\Table(name="congress_registration")
+ * @ORM\Entity(repositoryClass="TV\UserBundle\Repository\CongressRegistrationRepository")
+ */
+class CongressRegistration
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="TV\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="chosen_day", type="string", length=255)
+     */
+    private $chosenDay;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="event", type="boolean")
+     */
+    private $event;
+    
+    
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+

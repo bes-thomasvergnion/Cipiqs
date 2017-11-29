@@ -1,0 +1,54 @@
+{# src/TV/CipiqsBundle/Resources/views/Page/index.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Accueil
+{% endblock %}
+
+{% block cipiqs_body %}
+    
+    <section class="center no-padding">
+        <img class="banner" src="{{ asset('cipiqs/images/congres.jpg') }}" alt="Nouveau Congrès">
+    </section>
+
+    {% if congres is not null %}
+    <section>
+        <div class="container">
+            <h2 class="title_home">{{ congres.title }}</h2>
+            <p>{{ congres.content|length > 655 ? congres.content|slice(0, 655) ~ '...' : congres.content  }}</p>
+            <a class="btn" href="{{ path('tv_congres_view', {'id':congres.id}) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscription au congrès</a>
+        </div>
+    </section>
+        
+    <hr/>
+    {% endif %}
+    
+    <section class="home">
+        <div class="container">
+            <h2>Qui sommes-nous ?</h2>
+            <img class="picture" src="{{ asset('cipiqs/images/immeuble.jpg') }}" alt="Immeuble">
+            <p>La CIPIQ-S est une association internationale sans but lucratif créée en 1997, de langue francophone, composée de praticiens et intervenants en qualité dans le domaine de la santé. C'est un lieu convivial d'échanges et de partages entre professionnels.</p>
+            <p>Plusieurs pays y sont représentés: la Belgique, le Canada, la France, le Grand-Duché de Luxembourg et la Suisse.</p>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <section class="home">
+        <div class="container">
+        <h2>Notre vision</h2>
+            <img class="picture" src="{{ asset('cipiqs/images/vision.jpg') }}" alt="Vision">
+            <div class="text-box">
+                <p class="first-text">Notre priorité est d’être un lieu de rencontre et de partage francophone international de praticiens et intervenants en qualité dans le domaine de la santé, proche des problématiques des terrains, ayant un rôle de promoteur et de relais pour le développement continu et durable de la qualité.</p>
+                <p> Cette vision est déployée dans trois axes d'activités :</p>
+                <ul>
+                    <li>l'organisation de congrès annuels.</li>
+                    <li>l'organisation de visioconférences.</li>
+                    <li>la gestion d'un projet de développement des soins basés sur les preuves pour le compte du Ministère fédéral belge de la santé.</li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+{% endblock %}

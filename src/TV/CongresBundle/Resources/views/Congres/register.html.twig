@@ -1,0 +1,48 @@
+{# src/TV/CongresBundle/Resources/views/Congres/register.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - {{ congres.title }}
+{% endblock %}
+
+{% block cipiqs_body %}
+    <section class="border-top">
+        <div class="container">
+            <h2>Inscription pour le congrès: {{ congres.title }}</h2>
+            <p>Les frais d'inscription et l'éventuelle inscription à la soirée festive sont à virer sur le compte IBAN LU25 1111 2579 9673 0000 des P & T Luxembourg. Le Code BIC des P&T est : CCPLLULL</p>
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                <p>
+                    {{ form_widget(form.chosenDay.children[0]) }}
+                    <label for="tv_congresbundle_congressregistration_chosenDay_0">Inscription aux deux jours = {{ congres.priceBoth }} €</label>
+                </p>
+                <p>
+                    {{ form_widget(form.chosenDay.children[1]) }}
+                    <label for="tv_congresbundle_congressregistration_chosenDay_1">Inscription au {{ congres.dates[0].date|date('d/m/Y') }} uniquement = {{ congres.priceDay1 }} €</label>
+                </p>
+                <p>
+                    {{ form_widget(form.chosenDay.children[2]) }}
+                    <label for="tv_congresbundle_congressregistration_chosenDay_2">Inscription au {{ congres.dates[1].date|date('d/m/Y') }} uniquement = {{ congres.priceDay2 }} €</label>
+                </p>
+                <p>
+                    {{ form_widget(form.chosenDay.children[3]) }}
+                    <label for="tv_congresbundle_congressregistration_chosenDay_3">Au moins 5 inscrits de la même institution = {{ congres.groupPrice }} €/personne</label>
+                </p>
+                
+                <h3>{{ congres.event }}</h3>
+                <p>
+                    {{ form_widget(form.event.children[0]) }}
+                    <label for="tv_congresbundle_congressregistration_event_0">Je m'inscris et verse {{ congres.eventPrice }} €</label>
+                </p>
+                <p>
+                    {{ form_widget(form.event.children[1]) }}
+                    <label for="tv_congresbundle_congressregistration_event_1">Je ne m'inscris pas</label>
+                </p>
+                
+                <button type="submit" class="btn publish">
+                    <i class="fa fa-paper-plane" aria-hidden="true"></i> M'inscrire
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

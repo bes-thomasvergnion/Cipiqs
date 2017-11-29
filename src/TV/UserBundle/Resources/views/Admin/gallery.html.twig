@@ -1,0 +1,43 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Galerie
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="admin-container">
+            <h2>Images</h2>
+            <div class="dropzone my-dropzone" id="form_snippet_image" action="{{path('ajax_snippet_image_send')}}">
+            </div>
+
+            <div class="gallery">
+                {% for image in listImages %}
+                    <img {% if loop.first %}class="actived"{% endif %} id="{{ image.id }}" src="{{ asset(image.webPath) }}" alt="{{ image.alt }}">
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('cipiqs/js/dropzone.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var _actionToDropZone = $("#form_snippet_image").attr('action');
+
+            Dropzone.options.myAwesomeDropzone = false;
+            var myDropzone = new Dropzone("#form_snippet_image", {url: _actionToDropZone});
+
+            myDropzone.on("addedfile", function(file) {
+                console.log('"OK"');
+            });
+        });
+    </script>
+{% endblock %}
+
+

@@ -1,0 +1,68 @@
+tv_user_admin_dashboard:
+    path:     admin/dashboard
+    defaults: 
+        _controller: TVUserBundle:Admin:dashboard
+    
+tv_user_admin_congres:
+    path:     admin/congres/{page}
+    defaults: 
+        _controller: TVUserBundle:Admin:congres
+        page: 1
+    requirements:
+        page: \d*
+        
+tv_user_admin_congres_brouillons:
+    path:     admin/user/brouillons/{page}
+    defaults: 
+        _controller: TVUserBundle:Admin:brouillon
+        page: 1
+    requirements:
+        page: \d*
+        
+tv_user_admin_images:
+    path:     admin/images
+    defaults: 
+        _controller: TVUserBundle:Admin:images
+    
+tv_user_index:
+    path:     admin/user/index/{page}
+    defaults: 
+        _controller: TVUserBundle:User:index
+        page: 1
+    requirements:
+        page: \d*
+    
+tv_user_view:
+    path:     /user/view/{id}
+    defaults: 
+        _controller: TVUserBundle:User:view
+    requirements:
+        id: \d+
+        
+tv_user_edit:
+    path:     /user/edit/{id}
+    defaults: 
+        _controller: TVUserBundle:User:edit
+    requirements:
+        id: \d+
+        
+tv_user_bannish:
+    path:     admin/user/bannish/{id}
+    defaults: 
+        _controller: TVUserBundle:User:bannish
+    requirements:
+        id: \d+
+        
+tv_user_members_registred_to_congress:
+    path:     admin/user/members-registred-to-congress/{id}
+    defaults: 
+        _controller: TVUserBundle:Admin:membersRegistredToCongress
+    requirements:
+        id: \d+
+        
+tv_user_export_csv:
+    path:   admin/user/export-csv/{id}
+    defaults:
+        _controller:  TVUserBundle:Admin:exportList
+    requirements:
+        id: \d+

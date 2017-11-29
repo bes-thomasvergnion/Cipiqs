@@ -1,0 +1,23 @@
+tv_cipiqs_homepage:
+    path:     /
+    defaults: { _controller: TVCipiqsBundle:Page:index }
+    
+tv_cipiqs_pebn:
+    path:     /PEBN
+    defaults: { _controller: TVCipiqsBundle:Page:pebn }
+    
+tv_cipiqs_status:
+    path:     /Statuts
+    defaults: { _controller: TVCipiqsBundle:Page:status }
+    
+tv_cipiqs_structure:
+    path:     /Structure
+    defaults: { _controller: TVCipiqsBundle:Page:structure }
+    
+tv_cipiqs_activities:
+    path:     /Activités
+    defaults: { _controller: TVCipiqsBundle:Page:activities }
+    
+tv_cipiqs_contact:
+    path:     /Contact
+    defaults: { _controller: TVCipiqsBundle:Page:contact }

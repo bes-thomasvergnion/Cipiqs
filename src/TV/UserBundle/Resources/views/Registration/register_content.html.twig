@@ -1,0 +1,23 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form-fos fos_user_registration_register'}}) }}
+    <div class="col-2">
+        {{ form_label(form.lastName, "Pseudo:") }}
+        {{ form_widget(form.username) }}
+        {{ form_label(form.lastName, "Nom:") }}
+        {{ form_widget(form.lastName) }}
+        {{ form_label(form.profession, "Profession:") }}
+        {{ form_widget(form.profession) }}
+        {{ form_widget(form.plainPassword) }}
+    </div>
+    <div class="col-2 last">
+        {{ form_label(form.lastName, "Email:") }}
+        {{ form_widget(form.email) }}
+        {{ form_label(form.firstName, "Prénom:") }}
+        {{ form_widget(form.firstName) }}
+        {{ form_label(form.institution, "Institution:") }}
+        {{ form_widget(form.institution) }}
+    </div>
+    <div class="clearfix"></div>
+    <input class="btn" type="submit" value="{{ 'registration.submit'|trans }}" />
+{{ form_end(form) }}

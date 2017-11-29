@@ -1,0 +1,39 @@
+{# src/TV/CongresBundle/Resources/views/Congres/view.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Profil
+{% endblock %}
+
+{% block cipiqs_body %}
+    <section class="border-top">
+        <div class="container profil">
+            <h2>Modifier mon profil:</h2>
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                <img class="user-img" src="{{asset('cipiqs/images/user.jpg') }}" alt="Utilisateur">
+                <ul class="logos">
+                    <li><i class="fa fa-user" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-id-card-o" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-id-card-o" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-envelope" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-user-md" aria-hidden="true"></i></li>
+                    <li><i class="fa fa-hospital-o" aria-hidden="true"></i></li>
+                </ul>
+                <ul>
+                    <li>{{ user.username }}</li>
+                    <li>{{ form_widget(form.lastName) }}</li>
+                    <li>{{ form_widget(form.firstName) }}</li>
+                    <li>{{ form_widget(form.email) }}</li>
+                    <li>{{ form_widget(form.profession) }}</li>
+                    <li>{{ form_widget(form.institution) }}</li>
+                </ul>
+                <div class="btns">
+                    <button type="submit" class="btn publish">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Valider
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}

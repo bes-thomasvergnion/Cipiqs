@@ -1,0 +1,17 @@
+{# src/TV/CipiqsBundle/Resources/views/Page/structure.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Notre Structure
+{% endblock %}
+
+{% block cipiqs_body %}
+    
+    <section class="border-top">
+        <div class="container">
+            <img id="structure" src="{{ asset('cipiqs/images/structure2014.gif') }}" alt="Structure">
+        </div>
+    </section>
+
+{% endblock %}

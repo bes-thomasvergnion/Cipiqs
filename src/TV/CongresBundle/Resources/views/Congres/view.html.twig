@@ -1,0 +1,74 @@
+{# src/TV/CongresBundle/Resources/views/Congres/view.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - {{ congres.title }}
+{% endblock %}
+
+{% block cipiqs_body %}
+    <section class="border-top">
+        <div class="container">
+            <div class="relative-box">
+                {% if congres.image is not null %}
+                    <img class="picture img-congres-single" src="{{ asset(vich_uploader_asset(congres.image, 'file')) }}" alt="{{ congres.image.alt }}">
+                {% else %}
+                    <img class="picture img-congres-single" src="{{ asset('cipiqs/images/congres-default.jpg') }}" alt="Congrès défaut">
+                {% endif %}
+                <div class="text-box infos-congres">
+                    <h2 class="title_home">{{ congres.title }}</h2>
+                    <ul>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i> : 
+                            {% for date in congres.dates %}
+                                {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
+                            {% endfor %}
+                        </li>
+                        <li><i class="fa fa-map-marker" aria-hidden="true"></i> : {{ congres.localisation }}</li>
+                        {% if congres.state.id == 2 %}<li><i class="fa fa-users" aria-hidden="true"></i> : {{ congres.registeredMembers|length }}</li>{% endif %}
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+                <div class="btn-box">
+                    {% if congres.state.id == 3 and congres.summary is not null %}
+                        <a class="btn" target="blank" href="{{ asset(vich_uploader_asset(congres.summary, 'file')) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Résumé</a>
+                    {% elseif congres.state.id == 2 %}
+                        <a class="btn" href="{% if app.user in congres.registeredMembers %}{{ path('tv_congres_registered', {'id':congres.id}) }}{% else %}{{ path('tv_congres_register', {'id':congres.id}) }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscription au congrès</a>
+                        {% if congres.preProgram is not null %}
+                            <a class="btn second" target="blank" href="{{ asset(vich_uploader_asset(congres.preProgram, 'file')) }}" target="blank"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Pré-programme</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <p>{{ congres.content }}</p>
+                
+            {% if congres.state.name == "A la Une" %}
+                <h3>Membres inscrits au congrès:</h3>
+                <a class="hidden-link" href="">Voir le tableau des membres insrcits</a>
+                {% if listCongressRegistration is not empty %}
+                    <table class="registered-members">
+                    <tr>
+                        <th>N°</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Profession</th>
+                        <th>Institution</th>
+                    </tr>
+
+                    {% for user in congres.registeredMembers %}
+                        {% set count = count + 1 %}
+                        <tr>
+                            <td class="number">{{ count }}</td>
+                            <td class="name">{{ user.lastName }}</td>
+                            <td class="name">{{ user.firstName }}</td>
+                            <td>{{ user.profession }}</td>
+                            <td>{{ user.institution }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                {% else %}
+                    <p>Aucun utilisateurs inscrits à ce congrès pour le moment</p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,223 @@
+/*********************************************************************************/
+/* Desktop                                                                       */
+/*********************************************************************************/
+@media (max-width: 1400px) {
+	/* Général */
+	.container{width: 900px;}
+	nav .menu li{margin-right: 119px;}
+	section .picture{width: 250px;}
+	.text-box{width: 570px;}
+	footer .box.first{width: 240px;}
+	footer .box{width: 400px;}
+	footer ul li{font-size: 16px;}
+	footer .box.last{
+		width: 210px;
+		margin-left: 50px;
+	}
+	footer .box.last img{max-height: 45px;}
+
+	/* Page Congrès */
+	.new .text-box{width: 620px;}
+	.btn-box, .new .container .btn{left: 0;}
+	.new .container .btn i{display: none;}
+	.new .container .btn{padding: 0 21px;}
+	.infos-congres{width: 620px;}
+
+	/* Page PEBN */
+	.ebn{float: none;}
+
+	/* Page Contact */
+	section .contact-picture{width: 290px;}
+}
+
+/*********************************************************************************/
+/* Tablet                                                                        */
+/*********************************************************************************/
+@media (max-width: 1000px) {
+	/* Général */
+	section{padding: 40px 0;}
+	.container{width: 700px;}
+	nav .menu li{margin-right: 69px;}
+	.home .text-box{
+	    width: 100%;
+	    display: inline;
+	    float: none;
+	}
+	section .picture{width: 230px;}
+	footer .box.first{width: 175px;}
+	footer .box{width: 325px;}
+	footer .box.last{
+		width: 150px;
+		margin-left: 50px;
+	}
+	footer ul li{font-size: 14px;}
+	footer .box.last img{max-height: 45px; max-width: 150px;}
+
+	/* Page Congrès */
+	section.new .picture{display: none;}
+	.new .text-box{width: 100%; height: 100%;}
+	.new .container .btn{
+		position: relative;
+		margin-top: 15px;
+		padding: 0 30px;
+	}
+	.new .container .btn i{display: inline;}
+	.old-congres .picture{width: 180px; margin-right: 20px;}
+	.old-congres .text-box{width: 500px;}
+	.old-congres .btn{ left: 0; }
+	.img-congres-single{display: none;}
+	.infos-congres {height: 100%; width: 100%;}
+	.relative-box .btn-box{position: relative;}
+	.relative-box .btn-box .btn{margin-bottom: 10px;}
+
+	/* Page Nos Statuts */
+	.collabo{
+		font-size: 0.6em;
+		margin-top: 5px;
+	}
+
+	/* Page Contact */
+	.infos-contact .picture{width: 290px;}
+	.contact-form{margin-top: 50px;}
+	.contact-form h3{margin-bottom: 20px;}
+	.contact-form input{
+	    width: 220px;
+	    margin-right: 20px;
+    }
+    .contact-form textarea{width: 100%;}
+}
+
+/*********************************************************************************/
+/* Phablet                                                                       */
+/*********************************************************************************/
+@media (max-width: 750px) {
+	/* Général */
+	.container{width: 500px;}
+	#logo{width: 200px;}
+	nav{display: none;}
+	hr{width: 80%;}
+	.connexion{display: none;}
+	.responsive-btn i{
+		float: right;
+		font-size: 50px;
+		color: #fff;
+		cursor: pointer;
+	}
+	.responsive-btn .hamburger-icon{display: block;}
+	.responsive-menu{
+		position: absolute;
+		top: 70px;
+		width: 100%;
+		background: #f1f1f1;
+		z-index: 2;
+		padding: 0;
+	}
+	.responsive-menu ul{
+		list-style: none;
+		text-align: center;
+		padding: 0;
+		margin: 0;
+	}
+	.responsive-menu li{
+		width: 100%;
+		border-bottom: 1px solid #292727;
+		font-weight: bold;
+	}
+	.responsive-menu li a{
+		color: #292727;
+		font-size: 26px;
+		padding: 25px 0;
+		display: block;
+		width: 100%;
+	}
+	.responsive-menu li a i{
+		margin-right: 10px;
+	}
+	footer{padding: 15px 0;}
+	footer .box{display: none;}
+	footer .box.last{
+		display: block;
+		width: 100%;
+		margin: 0;
+	}
+	footer .last img{
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 20px;
+	}
+
+	/* Page Congrès */
+	.old-congres .text-box{height: 100%;}
+	.old-congres .picture{display: none;}
+	.old-congres .btn{position: relative; margin-top: 15px;}
+
+	/* Page Contact */
+	.infos-contact .picture{display: none;}
+	.infos-contact ul{padding-left: 0;}
+	.contact-form input{width: 240px;}
+	.contact-form input.second{margin-right: 0;}
+	.contact-form input.last{margin-top: 10px;}
+
+	/* Page User */
+	.user-img{height: 110px;}
+}
+
+/*********************************************************************************/
+/* Mobile                                                                        */
+/*********************************************************************************/
+@media (max-width: 550px) {
+	/* Général */
+	.container{width: 380px;}
+
+	/* Page Congrès */
+	.old-congres .text-box{width: 100%;}
+	.registered-users table{display: none;}
+	.hidden-link{display: inline;}
+
+	/* Page Contact */
+	.contact-form input{width: 100%; margin-right: 0; margin-bottom: 10px;}
+	.contact-form input.last{margin-top: 0;}
+	.contact-form textarea{margin: 15px 0;}
+
+	/* Page User */
+	.user-img{display: none;}
+	.profil {height: 100%;}	
+	.profil .btns .btn{margin-bottom: 10px;margin-right: 0}
+}
+
+/*********************************************************************************/
+/* Small mobile                                                                  */
+/*********************************************************************************/
+@media (max-width: 400px) {
+	/* Général */
+	.container{width: 300px;}
+	.responsive-btn i{font-size: 35px;}
+	h1{font-size: 0;}
+	#logo{width: 145px;}
+	.responsive-menu{top: 56px;}
+	.responsive-menu li a{
+		padding: 15px 0;
+		font-size: 20px;
+	}
+	section .picture{
+		float: none;
+		width: 100%;
+		margin-bottom: 10px;
+	}
+
+	/* Page User */
+	.profil ul li{font-size: 16px;}
+}
+
+/*********************************************************************************/
+/* Small mobile                                                                  */
+/*********************************************************************************/
+@media (max-width: 310px) {
+	/* Général */
+	.container{width: 250px;}
+
+	/* Page User */
+	.profil ul li{font-size: 14px;}
+	.profil .logos {width: 20px;}
+	.profil ul li i{margin: 0;}
+}

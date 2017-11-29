@@ -1,0 +1,70 @@
+<?php
+
+namespace TV\UserBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+
+/**
+ * User
+ *
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="TV\UserBundle\Repository\UserRepository")
+ */
+class User extends BaseUser
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="first_name", type="string", length=255)
+     */
+    private $firstName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="last_name", type="string", length=255)
+     */
+    private $lastName;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="profession", type="string", length=255)
+     */
+    private $profession;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="institution", type="string", length=255)
+     */
+    private $institution;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="registration_date", type="datetime")
+     */
+    private $registrationDate;
+    
+    
+    
+    public function __construct() 
+    {
+        $this->registrationDate = new \Datetime();
+    }
+    
+    
+    
+    
+}

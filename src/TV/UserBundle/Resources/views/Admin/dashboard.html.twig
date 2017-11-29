@@ -1,0 +1,69 @@
+{% extends "::layout-admin.html.twig" %}
+
+{% block title %}
+    {{ parent() }} - Tableau de bord
+{% endblock %}
+
+{% block body %}
+    <section  class="admin-content">
+        <div class="stats">
+            <div class="stat">
+                <p>Nombre total d'utilisateurs:</p>
+                <p class="big-number">{{ users }}</p>
+            </div>
+            <div class="stat">
+                <p>Nombre d'utilisateurs inscrits au prochain congrès:</p>
+                <p class="big-number">{% if newCongres is not null %}{{ newCongres.registeredMembers|length }}{% else %}0{% endif %}</p>
+            </div>
+            <div class="stat last">
+                <p>Nombre total de congrès:</p>
+                <p class="big-number">{{ congres|length }}</p>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="admin-container">
+            <h2>Congrès à la une: </h2>
+            <div class="dashbord-new-congres">
+                {% if newCongres is not null %}
+                    {% if newCongres.image is not null %}
+                        <img class="picture" src="{{ vich_uploader_asset(newCongres.image, 'file') }}" alt="{{ newCongres.image.alt }}">
+                    {% else %}
+                        <img class="picture img-congres-single" src="{{ asset('cipiqs/images/congres-default.jpg') }}" alt="Congrès défaut">
+                    {% endif %}
+                    <div class="text-box infos-congres">
+                        <h2 class="title_home">{{ newCongres.title }}</h2>
+                        <ul>
+                            <li><i class="fa fa-calendar" aria-hidden="true"></i> : 
+                                {% for date in newCongres.dates %}
+                                    {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
+                                {% endfor %}</li>
+                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> : {{ newCongres.localisation }}</li>
+                            <li><i class="fa fa-users" aria-hidden="true"></i> : 12</li>
+                        </ul>
+                        <a class="btn" href="{{ path('tv_congres_edit', {'id':newCongres.id}) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modifier</a>
+                        <a class="btn" href="{{ path('tv_user_members_registred_to_congress', {'id':newCongres.id}) }}"><i class="fa fa-users" aria-hidden="true"></i> Membres inscrits au congrès</a>
+                    </div>
+                    <div class="clearfix"></div>
+                {% else %}
+                    <p>Aucun congrès à la une pour le moment.</p>
+                {% endif %}
+            </div>
+
+            <h2>Manuel d'utilisation de la plateforme ADMIN:</h2>
+            <p>Equitis Romani autem esse filium criminis loco poni ab accusatoribus neque his iudicantibus oportuit neque defendentibus nobis. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat.</p>
+            <p>Equitis Romani autem esse filium criminis loco poni ab accusatoribus neque his iudicantibus oportuit neque defendentibus nobis. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat.</p>
+            <p>Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed:</p>
+            <ul>
+                <li>Equitis Romani</li>
+                <li>Squalor patris</li>
+                <li>Romani autem esse filium criminis loco poni ab accusatoribus neque</li>
+                <li>squalor patris et haec praesens maestitia</li>
+                <li>Quidem ista nostra existimatio, sed iudicium certe parentis</li>
+                <li>Romani autem esse filium criminis loco poni ab accusatoribus neque</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
+
+

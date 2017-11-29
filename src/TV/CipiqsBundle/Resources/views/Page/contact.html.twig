@@ -1,0 +1,72 @@
+{# src/TV/CipiqsBundle/Resources/views/Page/contact.html.twig #}
+
+{% extends "TVCipiqsBundle::layout.html.twig" %}
+{% form_theme form 'TVCipiqsBundle:Form:error.html.twig' %}
+
+{% block title %}
+    {{ parent() }} - Contact
+{% endblock %}
+
+{% block cipiqs_body %}
+    
+    <section class="border-top">
+        <div class="container">
+            <h2 class="hidden">Contact</h2>
+            <div class="infos-contact">
+                <img class="picture contact-picture" src="{{ asset('cipiqs/images/immeuble.jpg') }}" alt="Contact">
+                <h3 class="first">CIPIQ-S:</h3>
+                <ul>
+                    <li>Téléphone du trésorier : 00 32 / (0) 495 259 330</li>
+                    <li>Téléphone du président : 00 32 / (0) 485 685 060</li>
+                    <li>E-mail: Anne-Claire.Rae@hcuge.ch</li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Pour nous envoyez un message:</h3>
+                {{ form_start(form) }}
+                    <div class="errors">
+                        {% if form.name.vars.errors.count() > 0 or form.subject.vars.errors.count() > 0 %}
+                            <ul>
+                                {{ form_errors(form.name) }} 
+                                {{ form_errors(form.subject) }}
+                            </ul>
+                        {% endif %}
+                        
+                        {% if form.message.vars.errors.count() > 0 or form.email.vars.errors.count() > 0 %}
+                            <ul>
+                                {{ form_errors(form.email) }}
+                                {{ form_errors(form.message) }}
+                            </ul>
+                        {% endif %}
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-1-3">
+                        <p>{{ form_label(form.name, "Votre nom:") }}</p>
+                        {{ form_widget(form.name) }}
+                    </div>
+                    <div class="form-1-3">
+                        <p>{{ form_label(form.email, "Votre e-mail:") }}</p>
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="form-1-3">
+                        <p>{{ form_label(form.subject, "Votre sujet:") }}</p>
+                        {{ form_widget(form.subject) }}
+                    </div>
+                    <div class="clearfix"></div>
+                    <p>{{ form_label(form.message, "Votre message:") }}</p>
+                    {{ form_widget(form.message) }}<br>
+                    <div style="display:none">
+                        {{ form_rest(form) }}
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fa fa-paper-plane" aria-hidden="true"></i> Envoyer
+                    </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
