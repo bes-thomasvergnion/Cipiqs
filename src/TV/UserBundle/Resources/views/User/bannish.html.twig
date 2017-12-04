@@ -12,7 +12,7 @@
                 <p>Etes vous sur de vouloir bannir {{ user.firstName}} {{ user. lastName }} ?</p>
                 
                 <form action="{{ path('tv_user_bannish', {'id': user.id}) }}" method="post">
-                    <a href="{{ path('tv_user_admin_users') }}" class="btn">Retour</a>
+                    <a href="{{ path('tv_user_index') }}" class="btn">Retour</a>
                     <input type="submit" value="Bannir" class="btn">
                     {{ form_rest(form) }}
                 </form>

@@ -50,7 +50,7 @@ class UserController extends Controller
             $user->setEnabled(false);
             $em->flush();
             
-            return $this->redirectToRoute('tv_user_admin_users');
+            return $this->redirectToRoute('tv_user_index');
         }
         return $this->render('TVUserBundle:User:bannish.html.twig', array(
             'user' => $user,

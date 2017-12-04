@@ -31,13 +31,13 @@
                         <td>{{ registration.user.institution }}</td>
                         <td>
                             {% if registration.chosenDay == "Inscription au jour 1" %}
-                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }}
+                                Inscription pour le {{ congres.dateDay1|date('d/m/Y') }}
                             {% elseif registration.chosenDay == "Inscription au jour 2" %}
-                                Inscription pour le {{ congres.dates[1].date|date('d/m/Y') }}
+                                Inscription pour le {{ congres.dateDay2|date('d/m/Y') }}
                             {% elseif registration.chosenDay == "Inscription au deux jours" %}
-                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }} et le {{ congres.dates[1].date|date('d/m/Y') }}
+                                Inscription pour le {{ congres.dateDay1|date('d/m/Y') }} et le {{ congres.dateDay2|date('d/m/Y') }}
                             {% elseif registration.chosenDay == "Inscription au deux jours en groupe" %}
-                                Inscription pour le {{ congres.dates[0].date|date('d/m/Y') }} et le {{ congres.dates[1].date|date('d/m/Y') }} en groupe
+                                Inscription pour le {{ congres.dateDay1|date('d/m/Y') }} et le {{ congres.dateDay2|date('d/m/Y') }} en groupe
                             {% endif %}
                         </td>
                         {% if congres.event is not null %}<td>{% if registration.event == true %}Oui{% else %}Non{% endif %}</td>{% endif %}

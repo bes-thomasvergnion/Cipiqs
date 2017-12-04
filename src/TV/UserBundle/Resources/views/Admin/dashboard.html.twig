@@ -34,10 +34,7 @@
                     <div class="text-box infos-congres">
                         <h2 class="title_home">{{ newCongres.title }}</h2>
                         <ul>
-                            <li><i class="fa fa-calendar" aria-hidden="true"></i> : 
-                                {% for date in newCongres.dates %}
-                                    {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
-                                {% endfor %}</li>
+                            <li><i class="fa fa-calendar" aria-hidden="true"></i> : {{ newCongres.dateDay1|date('d/m/Y') }} & {{ newCongres.dateDay2|date('d/m/Y') }}</li>
                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> : {{ newCongres.localisation }}</li>
                             <li><i class="fa fa-users" aria-hidden="true"></i> : 12</li>
                         </ul>
@@ -45,23 +42,39 @@
                         <a class="btn" href="{{ path('tv_user_members_registred_to_congress', {'id':newCongres.id}) }}"><i class="fa fa-users" aria-hidden="true"></i> Membres inscrits au congrès</a>
                     </div>
                     <div class="clearfix"></div>
+                    <p>{{ newCongres.content }}</p>
+                    <h3>Membres inscrits au congrès:</h3>
+                        <a class="hidden-link" href="">Voir le tableau des membres insrcits</a>
+                        {% if listCongressRegistration is not empty %}
+                            <table class="registered-members">
+                            <tr>
+                                <th>N°</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Profession</th>
+                                <th>Institution</th>
+                            </tr>
+
+                            {% for user in newCongres.registeredMembers %}
+                                {% set count = count + 1 %}
+                                <tr>
+                                    <td class="number">{{ count }}</td>
+                                    <td class="name">{{ user.lastName }}</td>
+                                    <td class="name">{{ user.firstName }}</td>
+                                    <td>{{ user.profession }}</td>
+                                    <td>{{ user.institution }}</td>
+                                </tr>
+                            {% endfor %}
+                            </table>
+                            <a href="{{ path('tv_user_export_csv', {'id':newCongres.id}) }}" class="btn">Exporter</a>
+                        {% else %}
+                            <p>Aucun utilisateurs inscrits à ce congrès pour le moment</p>
+                        {% endif %}
                 {% else %}
                     <p>Aucun congrès à la une pour le moment.</p>
                 {% endif %}
             </div>
 
-            <h2>Manuel d'utilisation de la plateforme ADMIN:</h2>
-            <p>Equitis Romani autem esse filium criminis loco poni ab accusatoribus neque his iudicantibus oportuit neque defendentibus nobis. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat.</p>
-            <p>Equitis Romani autem esse filium criminis loco poni ab accusatoribus neque his iudicantibus oportuit neque defendentibus nobis. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat. Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed iudicium certe parentis; quid nos opinemur, audietis ex iuratis; quid parentes sentiant, lacrimae matris incredibilisque maeror, squalor patris et haec praesens maestitia, quam cernitis, luctusque declarat.</p>
-            <p>Nam quod de pietate dixistis, est quidem ista nostra existimatio, sed:</p>
-            <ul>
-                <li>Equitis Romani</li>
-                <li>Squalor patris</li>
-                <li>Romani autem esse filium criminis loco poni ab accusatoribus neque</li>
-                <li>squalor patris et haec praesens maestitia</li>
-                <li>Quidem ista nostra existimatio, sed iudicium certe parentis</li>
-                <li>Romani autem esse filium criminis loco poni ab accusatoribus neque</li>
-            </ul>
         </div>
     </section>
 {% endblock %}

@@ -6,11 +6,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class CongresType extends AbstractType
 {
@@ -21,17 +23,25 @@ class CongresType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-                'attr' => array('placeholder' =>'Saisisser votre titre ici')
+                'attr' => array('placeholder' =>'Saisisser votre titre ici'),
+                'label' => 'Titre:'
             ))
-            ->add('dates', CollectionType::class, array(
-                'entry_type'   => DateOfCongresType::class,
-                'allow_add'    => true,
-                'allow_delete' => true,
+            ->add('dateDay1', DateType::class, array(
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy',
                 'label' => FALSE,
-                'required' => false,
+                'attr' => array('placeholder' =>'jj/mm/aaaa')
+            ))
+            ->add('dateDay2', DateType::class, array(
+                'widget' => 'single_text',
+                'input' => 'datetime',
+                'format' => 'dd/MM/yyyy',
+                'label' => FALSE,
+                'attr' => array('placeholder' =>'jj/mm/aaaa')
             ))
             ->add('localisation', TextType::class, array(
-                'attr' => array('placeholder' =>'Ex: Luxembourg')
+                'attr' => array('placeholder' =>'Saisisser un pays'),
             ))
             ->add('content', TextareaType::class)
             ->add('state', EntityType::class, array(
@@ -52,27 +62,32 @@ class CongresType extends AbstractType
                 'required' => false,
                 'label' => false,
             ))
-            ->add('priceDay1', TextType::class, array(
+            ->add('priceDay1', IntegerType::class, array(
                 'required' => false
             ))
-            ->add('priceDay2', TextType::class, array(
+            ->add('priceDay2', IntegerType::class, array(
                 'required' => false
             ))
-            ->add('priceBoth', TextType::class, array(
+            ->add('priceBoth', IntegerType::class, array(
                 'required' => false
             ))
-            ->add('groupPrice', TextType::class, array(
+            ->add('groupPrice', IntegerType::class, array(
                 'required' => false
             ))
-            ->add('eventPrice', TextType::class, array(
+            ->add('eventPrice', IntegerType::class, array(
                 'required' => false
             ))
             ->add('event', TextType::class, array(
-                'required' => false
+                'required' => false,
+                'attr' => array('placeholder' =>'Saisisser le nom de l\'événement'),
             ))
             ->add('image', ImageType::class, array(
                 'label' => false,
                 'required' => false
+            ))
+            ->add('congresForm', CheckboxType::class, array(
+                'label'    => 'Activer formulaire',
+                'required' => false,
             ))
         ;        
   

@@ -18,11 +18,11 @@
                 </p>
                 <p>
                     {{ form_widget(form.chosenDay.children[1]) }}
-                    <label for="tv_congresbundle_congressregistration_chosenDay_1">Inscription au {{ congres.dates[0].date|date('d/m/Y') }} uniquement = {{ congres.priceDay1 }} €</label>
+                    <label for="tv_congresbundle_congressregistration_chosenDay_1">Inscription au {{ congres.dateDay1|date('d/m/Y') }} uniquement = {{ congres.priceDay1 }} €</label>
                 </p>
                 <p>
                     {{ form_widget(form.chosenDay.children[2]) }}
-                    <label for="tv_congresbundle_congressregistration_chosenDay_2">Inscription au {{ congres.dates[1].date|date('d/m/Y') }} uniquement = {{ congres.priceDay2 }} €</label>
+                    <label for="tv_congresbundle_congressregistration_chosenDay_2">Inscription au {{ congres.dateDay2|date('d/m/Y') }} uniquement = {{ congres.priceDay2 }} €</label>
                 </p>
                 <p>
                     {{ form_widget(form.chosenDay.children[3]) }}

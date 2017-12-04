@@ -16,10 +16,10 @@ class CongressRegistrationType extends AbstractType
     {
         $builder->add('chosenDay', ChoiceType::class, array(
                     'choices'  => array(
-                        'Inscription aux deux jours = ' => 'Inscription au deux jours',
+                        'Inscription aux deux jours = ' => 'Inscription aux deux jours',
                         'Inscription au premier jour uniquement = ' => 'Inscription au jour 1',
                         'Inscription au deuxième jour uniquement = ' => 'Inscription au jour 2',
-                        'Au moins 5 inscrits de la même institution = ' => 'Inscription au deux jours en groupe',
+                        'Au moins 5 inscrits de la même institution = ' => 'Inscription aux deux jours en groupe',
                     ),
                     'expanded' => true
                 ))

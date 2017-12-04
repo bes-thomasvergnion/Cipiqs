@@ -84,12 +84,6 @@ class Congres
     private $state;
     
     /**
-     * @ORM\ManyToMany(targetEntity="TV\CongresBundle\Entity\Date", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $dates;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="TV\CongresBundle\Entity\Image", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
@@ -103,11 +97,25 @@ class Congres
     private $congressRegistrations;
     
     /**
+     * @var \Date
+     *
+     * @ORM\Column(name="date_day1", type="date", nullable=true)
+     */
+    private $dateDay1;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="price_day1", type="integer", nullable=true)
      */
     private $priceDay1;
+    
+    /**
+     * @var \Date
+     *
+     * @ORM\Column(name="date_day2", type="date", nullable=true)
+     */
+    private $dateDay2;
 
     /**
      * @var int
@@ -150,12 +158,18 @@ class Congres
      * @ORM\JoinColumn(nullable=true)
      */
     private $registeredMembers;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="congres_form", type="boolean")
+     */
+    private $congresForm;
 
     public function __construct() 
     {
         $this->publicationDate = new \Datetime();
         $this->updatedAt = new \DateTime();
-        $this->dates = new ArrayCollection();
     }
     
     /**
@@ -369,40 +383,6 @@ class Congres
     }
 
     /**
-     * Add date
-     *
-     * @param \TV\CongresBundle\Entity\Date $date
-     *
-     * @return Congres
-     */
-    public function addDate(\TV\CongresBundle\Entity\Date $date)
-    {
-        $this->dates[] = $date;
-
-        return $this;
-    }
-
-    /**
-     * Remove date
-     *
-     * @param \TV\CongresBundle\Entity\Date $date
-     */
-    public function removeDate(\TV\CongresBundle\Entity\Date $date)
-    {
-        $this->dates->removeElement($date);
-    }
-
-    /**
-     * Get dates
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDates()
-    {
-        return $this->dates;
-    }
-
-    /**
      * Set image
      *
      * @param \TV\CongresBundle\Entity\Image $image
@@ -459,6 +439,52 @@ class Congres
     public function getCongressRegistrations()
     {
         return $this->congressRegistrations;
+    }
+
+    /**
+     * Set dateDay1
+     *
+     * @param \Date $dateDay1
+     *
+     * @return Congres
+     */
+    public function setDateDay1($dateDay1)
+    {
+        $this->dateDay1 = $dateDay1;
+        return $this;
+    }
+
+    /**
+     * Get dateDay1
+     *
+     * @return \Date
+     */
+    public function getDateDay1()
+    {
+        return $this->dateDay1;
+    }
+    
+    /**
+     * Set dateDay2
+     *
+     * @param \Date $dateDay2
+     *
+     * @return Congres
+     */
+    public function setDateDay2($dateDay2)
+    {
+        $this->dateDay2 = $dateDay2;
+        return $this;
+    }
+
+    /**
+     * Get dateDay2
+     *
+     * @return \Date
+     */
+    public function getDateDay2()
+    {
+        return $this->dateDay2;
     }
     
     /**
@@ -644,5 +670,28 @@ class Congres
     {
         return $this->updatedDate;
     }
+    
+    /**
+     * Set congresForm
+     *
+     * @param boolean $congresForm
+     *
+     * @return Congres
+     */
+    public function setCongresForm($congresForm)
+    {
+        $this->congresForm = $congresForm;
 
+        return $this;
+    }
+
+    /**
+     * Get congresForm
+     *
+     * @return boolean
+     */
+    public function getCongresForm()
+    {
+        return $this->congresForm;
+    }
 }

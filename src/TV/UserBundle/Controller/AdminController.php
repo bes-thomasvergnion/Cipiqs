@@ -3,10 +3,8 @@
 namespace TV\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use TV\CongresBundle\Entity\Image;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminController extends Controller
 {
@@ -15,26 +13,20 @@ class AdminController extends Controller
      */
     public function dashboardAction()
     {
-        $congres = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:Congres')
-            ->findAll()
-        ;
-        $users = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVUserBundle:User')
-            ->getUsersCount()
-        ;
-        $newCongres = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:Congres')
-            ->getNewCongres()
-        ;
+        $em = $this->getDoctrine()->getManager();
+        
+        $congres = $em->getRepository('TVCongresBundle:Congres')->findAll();       
+        $users = $em->getRepository('TVUserBundle:User')->getUsersCount();       
+        $newCongres = $em->getRepository('TVCongresBundle:Congres')->getNewCongres();     
+        $listCongressRegistration = $em->getRepository('TVCongresBundle:CongressRegistration')->listCongressRegistration($newCongres);
+        $count = 0;
         
         return $this->render('TVUserBundle:Admin:dashboard.html.twig', array(
             'newCongres' => $newCongres,
             'congres' => $congres,
             'users' => $users,
+            'listCongressRegistration' => $listCongressRegistration,
+            'count' => $count
         ));
     }
     
@@ -50,16 +42,9 @@ class AdminController extends Controller
         $count = 0;
         $nbPerPage = 20;
         
-        $listCongres = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:Congres')
-            ->listCongres($page, $nbPerPage)
-        ;
-        $newCongres = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:Congres')
-            ->getNewCongres()
-        ;
+        $em = $this->getDoctrine()->getManager();
+        $listCongres = $em->getRepository('TVCongresBundle:Congres')->listCongres($page, $nbPerPage);
+        $newCongres = $em->getRepository('TVCongresBundle:Congres')->getNewCongres();
         
         $nbPages = ceil(count($listCongres)/$nbPerPage);
         
@@ -111,42 +96,13 @@ class AdminController extends Controller
     /**
      * @Security("has_role('ROLE_ADMIN')")
      */
-    public function imagesAction(Request $request)
-    {
-        $image = new Image();
-        $listImages = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:Image')
-            ->listImages()
-        ;
-
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($image);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Image bien enregistrée');
-            return $this->redirectToRoute('tv_user_admin_images');
-        }
-        
-        return $this->render('TVUserBundle:Admin:gallery.html.twig', array(
-            'listImages' => $listImages
-        ));
-    }
-    
-    /**
-     * @Security("has_role('ROLE_ADMIN')")
-     */
     public function membersRegistredToCongressAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         $congres = $em->getRepository('TVCongresBundle:Congres')->find($id);
+        $registrations = $em->getRepository('TVCongresBundle:CongressRegistration')->listCongressRegistration($congres);
         $count = 0;
-
-        $registrations = $this->getDoctrine()
-            ->getManager()
-            ->getRepository('TVCongresBundle:CongressRegistration')
-            ->listCongressRegistration($congres)
-        ;
+        
         return $this->render('TVUserBundle:Admin:members_registred_to_congress.html.twig', array(
             'congres' => $congres,
             'registrations' => $registrations,
@@ -168,21 +124,54 @@ class AdminController extends Controller
             ->listCongressRegistration($congres)
         ;
         
-        $response = $this->render('TVUserBundle:Admin:export.csv.twig', array(
-            'congres' => $congres,
-            'registrations' => $registrations,
-            'count' => $count
-        ));
-        
+        $response = new StreamedResponse();
+        $response->setCallback(function() use($registrations, $count, $congres){
+            $handle = fopen('php://output','w+');
+            fputs($handle, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF)));
+            fputcsv($handle, array(
+                'N°',
+                'Nom',
+                'Prénom',
+                'Profession',
+                'Institution',
+                'Type d\'inscription',
+                'Participation à l\'événement',
+                'Montant à payer',
+            ),';');
+ 
+            foreach ($registrations as $registration)
+            {
+                $count ++;
+                $user = $registration->getUser();
+                $event = $registration->getEvent();
+                if($event === true){$eventParticipation = 'oui';}
+                else{$eventParticipation = 'non';}
+                
+                $chosenDay = $registration->getChosenDay();
+                $date1 = $congres->getDateDay1();
+                $date1 = date("d/m/Y");
+                $date2 = $congres->getDateDay2();
+                $date2 = date("d/m/Y");
+                if($chosenDay === 'Inscription au jour 1'){$day = "Inscription pour le ".$date1;}
+                else if($chosenDay === 'Inscription au jour 2'){$day = "Inscription pour le ".$date2;}
+                else if($chosenDay === 'Inscription aux deux jours'){$day = "Inscription pour le ".$date1." et le ".$date2;}
+                else if($chosenDay === 'Inscription aux deux jours en groupe'){$day = "Inscription pour le ".$date1." et le ".$date2." en groupe";}
+                fputcsv($handle,array(
+                    $count,
+                    $user->getLastName(),
+                    $user->getFirstName(),
+                    $user->getProfession(),
+                    $user->getInstitution(),
+                    $day,
+                    $eventParticipation,
+                    $registration->getTotalAmount().' €',
+                ),';');
+            }
+            fclose($handle);
+        });
         $response->setStatusCode(200);
-        $response->headers->set('Content-Type', 'text/csv');
-        $response->setCharset('ISO-8859-1');
-        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
-        $response->headers->set('Content-Transfer-Encoding', 'binary');
-        $response->headers->set('Pragma', 'no-cache');
-        $response->headers->set('Expires', '0');
-        
+        $response->headers->set('Content-Type', 'text/csv; charset=UTF-8');
+        $response->headers->set('Content-Disposition','attachment; filename="export.csv"');
         return $response;
-
     }
 }

@@ -11,7 +11,7 @@
             <p>Etes-vous certain de vouloir supprimer ce congrès ?</p>
             
             <form action="{{ path('tv_congres_delete', {'id': congres.id}) }}" method="post">
-                <a href="{{ path('tv_congres_view', {'id': congres.id}) }}" class="btn">Retour au congrès</a>
+                <a href="{{ path('tv_user_admin_congres', {'id': congres.id}) }}" class="btn">Annuler</a>
                 <input type="submit" value="Supprimer" class="btn">
                 {{ form_rest(form) }}
             </form>

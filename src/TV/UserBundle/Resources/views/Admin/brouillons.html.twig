@@ -33,11 +33,7 @@
                         </td>
                         <td class="table-title">{{ congres.title }}</td>
                         <td>{{ congres.state.name }}</td>
-                        <td>
-                            {% for date in congres.dates %}
-                                {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
-                            {% endfor %}
-                        </td>
+                        <td>{{ congres.dateDay1|date('d/m/Y') }} & {{ congres.dateDay2|date('d/m/Y') }}</td>
                         <td>{{ congres.localisation }}</td>
                         <td>{{ congres.publicationDate|date('d/m/Y') }}</td>
                         <td>

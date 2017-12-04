@@ -4,14 +4,12 @@ namespace TV\CongresBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TV\CongresBundle\Entity\Congres;
 use TV\CongresBundle\Entity\CongressRegistration;
 use TV\CongresBundle\Entity\Image;
 use TV\CongresBundle\Form\CongresType;
 use TV\CongresBundle\Form\CongressRegistrationType;
-use TV\CongresBundle\Form\ImageType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CongresController extends Controller
@@ -80,7 +78,7 @@ class CongresController extends Controller
     {      
         $congres = new Congres();
         $image = new Image();
-        $title = 'Ajouter un nouveau congrès';
+        $title = 'Ajouter un congrès';
         $listImages = $this->getDoctrine()
             ->getManager()
             ->getRepository('TVCongresBundle:Image')
@@ -96,7 +94,7 @@ class CongresController extends Controller
         
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
             $em = $this->getDoctrine()->getManager();
-            if(isset($_POST['image'])){
+            if(isset($_POST['image']) && $_POST['image'] != null){
                 $id = $_POST['image'];
                 $image = $em->getRepository('TVCongresBundle:Image')->find($id);
                 $congres->setImage($image);
@@ -155,9 +153,11 @@ class CongresController extends Controller
         
         if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
             $em = $this->getDoctrine()->getManager();
-//            $id = $_POST['image'];
-//            $image = $em->getRepository('TVCongresBundle:Image')->find($id);
-//            $congres->setImage($image);
+            if(isset($_POST['image']) && $_POST['image'] != null){
+                $id = $_POST['image'];
+                $image = $em->getRepository('TVCongresBundle:Image')->find($id);
+                $congres->setImage($image);
+            }
             if(isset($newCongres) && $newCongres != $congres){
                 $state = $congres->getState();
                 $stateId = $state->getId();
@@ -223,45 +223,50 @@ class CongresController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $congres = $em->getRepository('TVCongresBundle:Congres')->find($id);
+        $congresForm = $congres->getCongresForm();
         $user = $this->getUser();
         $totalAmount = 0;
         $form = $this->get('form.factory')->create(CongressRegistrationType::class, $congressRegistration);
         
-        if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
-            $congressRegistration->setUser($user);
-            $congres->addRegisteredMember($user);
-            $congressRegistration->setCongres($congres);
-            $chosenDay = $congressRegistration->getChosenDay();
-            $event = $congressRegistration->getEvent();
-            switch($chosenDay){
-                case "Inscription au deux jours":
-                    $totalAmount = $congres->getPriceBoth();
-                    break;
-                case "Inscription au jour 1":
-                    $totalAmount = $congres->getPriceDay1();
-                    break;
-                case "Inscription au jour 2":
-                    $totalAmount = $congres->getPriceDay2();
-                    break;
-                case "Inscription au deux jours en groupe":
-                    $totalAmount = $congres->getGroupPrice();
-                    break;
-                default:
-                    $totalAmount = $congres->getPriceBoth();
+        if($congresForm === true){
+            if($request->isMethod('POST') && $form->handleRequest($request)->isValid()){
+                $congressRegistration->setUser($user);
+                $congres->addRegisteredMember($user);
+                $congressRegistration->setCongres($congres);
+                $em->persist($congressRegistration);
+                $chosenDay = $congressRegistration->getChosenDay();
+                $event = $congressRegistration->getEvent();
+                switch($chosenDay){
+                    case "Inscription aux deux jours":
+                        $totalAmount = $congres->getPriceBoth();
+                        break;
+                    case "Inscription au jour 1":
+                        $totalAmount = $congres->getPriceDay1();
+                        break;
+                    case "Inscription au jour 2":
+                        $totalAmount = $congres->getPriceDay2();
+                        break;
+                    case "Inscription aux deux jours en groupe":
+                        $totalAmount = $congres->getGroupPrice();
+                        break;
+                    default:
+                        $totalAmount = $congres->getPriceBoth();
+                }
+                if($event === true){
+                    $totalAmount = $totalAmount + $congres->getEventPrice();
+                }
+                $congressRegistration->setTotalAmount($totalAmount);
+                $em->persist($congressRegistration);
+                $em->flush();
+                $request->getSession()->getFlashBag()->add('info', "Vous êtes bien inscrit au congrès.");
+                return $this->redirectToRoute('tv_congres_view', array('id' => $congres->getId()));
             }
-            if($event === true){
-                $totalAmount = $totalAmount + $congres->getEventPrice();
-            }
-            $congressRegistration->setTotalAmount($totalAmount);
-            $em->persist($congressRegistration);
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('info', "Vous êtes bien inscrit au congrès.");
-            return $this->redirectToRoute('tv_congres_view', array('id' => $congres->getId()));
+            return $this->render('TVCongresBundle:Congres:register.html.twig', array(
+                'congres' => $congres,
+                'form' => $form->createView(),
+            ));
         }
-        return $this->render('TVCongresBundle:Congres:register.html.twig', array(
-            'congres' => $congres,
-            'form' => $form->createView(),
-        ));
+        return $this->redirectToRoute('tv_congres_view', array('id' => $congres->getId()));
     }
     
     /**

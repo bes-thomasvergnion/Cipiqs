@@ -18,11 +18,7 @@
                 <div class="text-box infos-congres">
                     <h2 class="title_home">{{ congres.title }}</h2>
                     <ul>
-                        <li><i class="fa fa-calendar" aria-hidden="true"></i> : 
-                            {% for date in congres.dates %}
-                                {{ date.date|date('d/m/Y') }}{% if loop.index == 1 %}, {% endif %}
-                            {% endfor %}
-                        </li>
+                        <li><i class="fa fa-calendar" aria-hidden="true"></i> : {{ congres.dateDay1|date('d/m/Y') }} & {{ congres.dateDay2|date('d/m/Y') }}</li>
                         <li><i class="fa fa-map-marker" aria-hidden="true"></i> : {{ congres.localisation }}</li>
                         {% if congres.state.id == 2 %}<li><i class="fa fa-users" aria-hidden="true"></i> : {{ congres.registeredMembers|length }}</li>{% endif %}
                     </ul>
@@ -32,7 +28,9 @@
                     {% if congres.state.id == 3 and congres.summary is not null %}
                         <a class="btn" target="blank" href="{{ asset(vich_uploader_asset(congres.summary, 'file')) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Résumé</a>
                     {% elseif congres.state.id == 2 %}
-                        <a class="btn" href="{% if app.user in congres.registeredMembers %}{{ path('tv_congres_registered', {'id':congres.id}) }}{% else %}{{ path('tv_congres_register', {'id':congres.id}) }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscription au congrès</a>
+                        {% if congres.congresForm == true %}
+                            <a class="btn" href="{% if app.user in congres.registeredMembers %}{{ path('tv_congres_registered', {'id':congres.id}) }}{% else %}{{ path('tv_congres_register', {'id':congres.id}) }}{% endif %}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Inscription au congrès</a>
+                        {% endif %}
                         {% if congres.preProgram is not null %}
                             <a class="btn second" target="blank" href="{{ asset(vich_uploader_asset(congres.preProgram, 'file')) }}" target="blank"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Pré-programme</a>
                         {% endif %}
