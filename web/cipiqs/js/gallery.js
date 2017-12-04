@@ -20,6 +20,7 @@ $(document).ready(function(){
         $image_id = $(this).attr('id');
         $('#hidden-input').attr({value: $image_id});
         console.log($image_id);
+        e.preventDefault();
     });
 });
 

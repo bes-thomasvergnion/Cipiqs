@@ -678,23 +678,31 @@ form .main-info input,textarea{
 }
 form .main-info .title-input{
     font-size: 1.2em;
-    margin-top: 0;
 }
-form .main-info-1-2{
+.col{float: left;}
+.col.last{margin-right: 0;}
+.col p{margin: 0;}
+
+.col-1-2{
     width: 450px;
-    float: left;
-    margin: 30px 100px 30px 0;
+    margin: 30px 100px 0 0;
 }
-form .main-info-1-2.last{
-    margin-right: 0;
+.col-1-4{
+    width: 300px;
+    margin-right: 30px ;
 }
-form .main-info-1-2.last p{
+.col-1-4.last{width: 120px;}
+.col-1-4 p{
     margin: 0;
-    line-height: 1em;
+    line-height: 20px;
 }
-form .main-info-1-2.last input{
-    width: 80%;
+.col-1-4 .price-both{
+    margin-top: 5px;
+    line-height: 36px;
 }
+.col .price{width: 100px;}
+.description{margin-top: 30px;}
+
 form .main-info .date-input{
     width: 80%;
     -webkit-box-sizing: border-box;
@@ -702,6 +710,7 @@ form .main-info .date-input{
     box-sizing: border-box;
     display: inline-block;
 }
+.ui-icon{color: #173e25;}
 #tv_congresbundle_congres_dates label{display: none;}
 form .main-info .btn{
     width: 34px;
@@ -809,15 +818,19 @@ form aside .box .box-content a i{
 }
 .gallery-header{ border-bottom: 1px solid #bbb;}
 .gallery{
-    width: 880px;
+    width: 860px;
     float: left;
-    padding: 30px 0;
+    padding: 30px 20px 30px 0;
+    height: 540px;
+}
+.gallery-img{
     height: 540px;
     overflow: auto;
 }
+.gallery .select{margin-top: 20px;float: right;}
 .gallery img{
-    width: 250px;
-    margin-right: 30px;
+    width: 185px;
+    margin-right: 25px;
     margin-bottom: 10px;
     cursor: pointer;
     border: 4px solid #fff;
@@ -827,7 +840,8 @@ form aside .box .box-content a i{
 }
 .gallery img.last{margin-right: 0;}
 .infos-img{
-    height: 820px;
+    width: 320px;
+    height: 670px;
     float: left;
     border-left: 1px solid #bbb;
     padding: 25px 15px;
@@ -841,7 +855,7 @@ form aside .box .box-content a i{
     list-style: none;
     color: #686565;
     padding: 0;
-    margin-top: 2px;
+    margin-top: 20px;
 }
 .infos-img ul .first{
     color: #292727;
@@ -951,6 +965,7 @@ form aside .box .box-content a i{
 .form-fos input{
     padding: 5px 10px;
 }
+.alert-success{display: none;}
 
 /* EDIT */
 .form-user .infos{
